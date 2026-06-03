@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ChewChew - 城市鸟类互动平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a4d3e 0%, #0d3327 50%, #0a2a20 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            font-size: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-text {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            padding: 0 20px;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+            animation-fill-mode: backwards;
+        }
+
+        .module-card:nth-child(1) { animation-delay: 0.2s; }
+        .module-card:nth-child(2) { animation-delay: 0.4s; }
+        .module-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2d5a4a, #1a3d30);
+            transition: height 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .module-card:hover::before {
+            height: 8px;
+        }
+
+        .module-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover .module-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .module-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a3d30;
+            margin-bottom: 15px;
+        }
+
+        .module-description {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .module-btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, #2d5a4a 0%, #1a3d30 100%);
+            color: white;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(45, 90, 74, 0.3);
+        }
+
+        .module-card:hover .module-btn {
+            background: linear-gradient(135deg, #3d6a5a 0%, #2a4d40 100%);
+            box-shadow: 0 6px 20px rgba(45, 90, 74, 0.4);
+            transform: scale(1.05);
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .floating-birds {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bird {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.1;
+            animation: flyAcross 20s linear infinite;
+        }
+
+        .bird:nth-child(1) { top: 10%; animation-delay: 0s; animation-duration: 25s; }
+        .bird:nth-child(2) { top: 30%; animation-delay: 5s; animation-duration: 20s; }
+        .bird:nth-child(3) { top: 50%; animation-delay: 10s; animation-duration: 22s; }
+        .bird:nth-child(4) { top: 70%; animation-delay: 15s; animation-duration: 18s; }
+
+        @keyframes flyAcross {
+            0% {
+                transform: translateX(-100px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .module-card {
+                padding: 30px 25px;
+            }
+
+            .module-icon {
+                font-size: 50px;
+            }
+
+            .module-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-birds">
+        <span class="bird">🐦</span>
+        <span class="bird">🦅</span>
+        <span class="bird">🦆</span>
+        <span class="bird">🐤</span>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🐦</span>
+                <span class="logo-text">ChewChew</span>
+            </div>
+            <p class="subtitle">探索城市中的鸟类世界</p>
+        </header>
+
+        <div class="modules-grid">
+            <a href="../../game/bird_game.html" class="module-card">
+                <span class="module-icon">🎮</span>
+                <h2 class="module-title">识鸟挑战</h2>
+                <p class="module-description">
+                    通过有趣的图片问答游戏，测试你的鸟类识别能力。<br>
+                    每关5题，看看你能答对多少！
+                </p>
+                <span class="module-btn">开始挑战 →</span>
+            </a>
+
+            <a href="../../knowledge_intro/know_intro.html" class="module-card">
+                <span class="module-icon">📚</span>
+                <h2 class="module-title">知识百科</h2>
+                <p class="module-description">
+                    探索城市中的鸟类邻居，了解它们的形态特征、<br>
+                    生活习性和趣味知识。
+                </p>
+                <span class="module-btn">开始探索 →</span>
+            </a>
+
+            <a href="../../picture_identify/pic_id.html" class="module-card">
+                <span class="module-icon">🔍</span>
+                <h2 class="module-title">智能识别</h2>
+                <p class="module-description">
+                    上传一张鸟类图片，让AI帮你识别它的种类，<br>
+                    了解详细的物种信息和形态特征。
+                </p>
+                <span class="module-btn">上传识别 →</span>
+            </a>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 ChewChew 城市鸟类互动平台 - 保护鸟类，爱护自然</p>
+            <div class="footer-links">
+                <a href="../../game/bird_game.html">识鸟挑战</a>
+                <a href="../../knowledge_intro/know_intro.html">知识百科</a>
+                <a href="../../picture_identify/pic_id.html">智能识别</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

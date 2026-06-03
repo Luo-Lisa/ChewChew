@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="探索城市中的鸟类邻居，了解它们的形态特征、生活习性和趣味知识。">
+    <meta name="keywords" content="城市鸟类, 鸟类科普, 自然教育, 麻雀, 鸽子, 燕子">
+    <meta name="author" content="城市鸟类科普">
+    <title>城市鸟类科普 - 发现身边的自然之美</title>
+    
+    <style>
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .home-btn:hover {
+            background: #3d6a4d;
+            transform: scale(1.05);
+        }
+    </style>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles_know.css">
+</head>
+<body>
+    <div id="app">
+        <header class="navbar" id="navbar">
+            <div class="navbar-container">
+                <a href="../final/chewchew/index.html" class="home-btn">🏠 首页</a>
+                <a href="#/" class="logo">
+                    <span class="logo-icon">🐦</span>
+                    <span class="logo-text">城市鸟类科普</span>
+                </a>
+                
+                <div class="search-container" id="searchContainer">
+                    <input 
+                        type="search" 
+                        id="searchInput" 
+                        class="search-input" 
+                        placeholder="搜索鸟类名称..."
+                        autocomplete="off"
+                        aria-label="搜索鸟类"
+                    >
+                    <button class="search-btn" aria-label="搜索">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="菜单">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+        
+        <main id="mainContent">
+            <section class="hero" id="heroSection">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="hero-icon">🌿</span>
+                        发现身边的自然之美
+                    </h1>
+                    <p class="hero-subtitle">
+                        探索城市中的鸟类邻居，了解它们的形态特征、生活习性和趣味知识
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="birdCount">10</span>
+                            <span class="stat-label">种城市鸟类</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5</span>
+                            <span class="stat-label">种栖息环境</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">条趣味知识</span>
+                        </div>
+                    </div>
+                    <button class="hero-cta" id="heroCtaBtn">
+                        开始探索
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12l7 7 7-7"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="hero-decoration">
+                    <div class="floating-bird bird-1">🐦</div>
+                    <div class="floating-bird bird-2">🦅</div>
+                    <div class="floating-bird bird-3">🦆</div>
+                </div>
+            </section>
+            
+            <section class="filters-section" id="filtersSection">
+                <div class="filters-container">
+                    <h2 class="filters-title">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                        </svg>
+                        按栖息环境筛选
+                    </h2>
+                    <div class="filter-tags" id="filterTags">
+                        <button class="filter-tag active" data-category="all">
+                            全部
+                        </button>
+                        <button class="filter-tag" data-category="garden">
+                            🏡 园林鸟类
+                        </button>
+                        <button class="filter-tag" data-category="wetland">
+                            🌊 湿地鸟类
+                        </button>
+                        <button class="filter-tag" data-category="rooftop">
+                            🏠 屋顶鸟类
+                        </button>
+                        <button class="filter-tag" data-category="forest">
+                            🌲 林地鸟类
+                        </button>
+                        <button class="filter-tag" data-category="waterside">
+                            🦆 水边鸟类
+                        </button>
+                    </div>
+                    <div class="active-filter" id="activeFilter">
+                        <span class="filter-label">当前筛选：</span>
+                        <span class="filter-value" id="filterValue">全部</span>
+                        <button class="clear-filter" id="clearFilter" style="display: none;">
+                            清除筛选
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="birds-grid-section" id="birdsGridSection">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="title-icon">📚</span>
+                        城市鸟类图鉴
+                    </h2>
+                    <p class="section-description">
+                        点击卡片了解每种鸟类的详细信息和趣味知识
+                    </p>
+                </div>
+                
+                <div class="birds-grid" id="birdsGrid">
+                </div>
+                
+                <div class="no-results" id="noResults" style="display: none;">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>没有找到相关鸟类</h3>
+                    <p>请尝试其他关键词或筛选条件</p>
+                    <button class="reset-btn" id="resetFiltersBtn">重置筛选</button>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="footer" id="footer">
+            <div class="footer-container">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <span class="footer-logo">🐦</span>
+                        <span class="footer-name">城市鸟类科普</span>
+                    </div>
+                    <p class="footer-description">
+                        致力于城市自然教育，让更多人了解和热爱身边的鸟类
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="#/">首页</a></li>
+                        <li><a href="#/">园林鸟类</a></li>
+                        <li><a href="#/">湿地鸟类</a></li>
+                        <li><a href="#/">关于我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-info">
+                    <h4>版权声明</h4>
+                    <p>本网页仅供科普教育目的使用</p>
+                    <p>© 2024 城市鸟类科普. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+        
+        <div class="back-to-top" id="backToTop" style="display: none;">
+            <button aria-label="返回顶部">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <div class="detail-overlay" id="detailOverlay" style="display: none;">
+        <div class="detail-container" id="detailContainer">
+            <button class="detail-close-btn" id="detailCloseBtn" aria-label="关闭详情">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="detail-content" id="detailContent">
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

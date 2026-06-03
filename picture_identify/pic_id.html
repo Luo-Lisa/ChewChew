@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鸟类图像识别</title>
+    <style>
+        .home-btn-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-btn:hover {
+            background: white;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+    <link rel="stylesheet" href="style_picid.css">
+</head>
+<body>
+    <div class="home-btn-container">
+        <a href="../final/chewchew/index.html" class="home-btn">🏠 首页</a>
+    </div>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">🦅 鸟类图像识别</h1>
+            <p class="subtitle">上传一张鸟类图片，让AI帮你识别它的种类</p>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📷</div>
+                <p class="upload-text">点击或拖拽上传图片</p>
+                <p class="upload-hint">支持 JPG、PNG、GIF 格式</p>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+            </div>
+
+            <div class="preview-container" id="previewContainer" style="display: none;">
+                <div class="preview-header">
+                    <h3>上传预览</h3>
+                    <button class="btn-remove" id="removeBtn">移除图片</button>
+                </div>
+                <img id="previewImage" class="preview-image" alt="预览图片">
+                <button class="btn-identify" id="identifyBtn">开始识别</button>
+            </div>
+
+            <div class="result-container" id="resultContainer" style="display: none;">
+                <div class="result-header">
+                    <h3>识别结果</h3>
+                    <div class="confidence-badge">
+                        <span class="confidence-label">置信度</span>
+                        <span class="confidence-value" id="confidenceValue">--</span>
+                    </div>
+                </div>
+                
+                <div class="result-image-container">
+                    <img id="resultUploadedImage" class="result-uploaded-image" alt="上传的图片">
+                </div>
+                
+                <div class="result-card" id="resultCard">
+                    <div class="result-icon" id="resultIcon">🦅</div>
+                    <div class="result-info">
+                        <h2 class="result-name" id="resultName">--</h2>
+                        <p class="result-english" id="resultEnglish">--</p>
+                        <p class="result-latin" id="resultLatin">--</p>
+                    </div>
+                </div>
+
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="detail-label">类别</span>
+                        <span class="detail-value" id="resultCategory">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">食性</span>
+                        <span class="detail-value" id="resultDiet">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">体型</span>
+                        <span class="detail-value" id="resultSize">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">保护等级</span>
+                        <span class="detail-value" id="resultConservation">--</span>
+                    </div>
+                </div>
+
+                <div class="result-description">
+                    <h4>物种描述</h4>
+                    <p id="resultDescription">--</p>
+                </div>
+
+                <div class="result-features">
+                    <h4>形态特征</h4>
+                    <ul id="resultFeatures"></ul>
+                </div>
+
+                <button class="btn-upload-another" id="uploadAnotherBtn">上传另一张图片</button>
+            </div>
+
+            <div class="loading-container" id="loadingContainer" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">AI正在分析图片...</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>鸟类图像识别系统 | 保护鸟类，爱护自然</p>
+        </footer>
+    </div>
+
+    <script src="script_picid.js"></script>
+</body>
+</html>
