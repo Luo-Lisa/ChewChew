@@ -148,7 +148,7 @@ const birdsData = [
         categoryName: "林地鸟类",
         diet: "食虫性",
         size: "20-24cm",
-        icon: "�",
+        icon: "🪵",
         description: "啄木鸟是森林医生，以在树干上啄木取食害虫而闻名。它们的头部结构特殊，能高速敲击树干而不受伤。",
         features: ["黑白相间羽毛", "红色臀部", "长而尖的喙", "攀附树干的对趾"],
         habitat: ["森林", "公园树木", "果园", "城市林荫道"],
@@ -584,8 +584,13 @@ function openBirdDetail(bird) {
     `;
 
     detailOverlay.style.display = 'flex';
+    document.getElementById('detailCloseBtnFloat').style.display = 'flex';
     isDetailOpen = true;
     document.body.style.overflow = 'hidden';
+    
+    setTimeout(function() {
+        detailContent.scrollTop = 0;
+    }, 0);
 
     const relatedBirdCards = detailContent.querySelectorAll('.related-bird-card');
     relatedBirdCards.forEach(function(card) {
@@ -595,15 +600,21 @@ function openBirdDetail(bird) {
                 return b.id === birdId;
             });
             if (relatedBird) {
+                setTimeout(function() {
+                    detailContent.scrollTop = 0;
+                }, 0);
                 openBirdDetail(relatedBird);
             }
         });
     });
+    
+    document.getElementById('detailCloseBtnFloat').addEventListener('click', closeDetail);
 }
 
 function closeDetail() {
     const detailOverlay = document.getElementById('detailOverlay');
     detailOverlay.style.display = 'none';
+    document.getElementById('detailCloseBtnFloat').style.display = 'none';
     isDetailOpen = false;
     document.body.style.overflow = '';
 }
